@@ -1,0 +1,110 @@
+<div class="row">
+    <div class="col-lg-6">
+        <!-- Formulaire Recherche -->
+        <div class="well well-lg">
+
+            <h2>chercher des ordre</h2>
+
+            <form role="form">
+
+                <div class="form-group input-group">
+                    <input type="text" class="form-control" placeholder="Entreprise" ng-model="nom_ent">
+                    <span class="input-group-btn"><button class="btn btn-default" type="button" ng-click="findBySte()"><i class="fa fa-search"></i></button></span>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Formulaire Ajout -->
+        <div class="well well-lg">
+            <h2>Ajouter un ordre</h2>
+            <form role="form">
+
+                <div class="form-group">
+                    <label> Nombre actions</label>
+                    <input class="form-control" placeholder="Enter text" ng-model="nb_action">
+                </div>
+
+                <div class="form-group">
+                    <label>prix</label>
+                    <input class="form-control" placeholder="Enter text" ng-model="prix">
+                </div>
+
+
+
+                <div class="form-group">
+                    <label>Societe</label>
+                    <select class="form-control" ng-model="codeSte">
+                                    <option ng-repeat="ste in societe">{{ste.nom}}</option>
+                                  
+                                </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Type ordre</label>
+                    <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="Achat" ng-model="type_achat" checked>achat
+                                </label>
+                    <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="Vente" ng-model="type_vente">vente
+                                </label>
+
+                </div>
+
+
+
+                <button ng-click="addOrdre()" class="btn btn-default" ng-model="sh">Valider</button>
+                <button ng-click="clear()" class="btn btn-default">Reset</button>
+
+            </form>
+            <div class="alert alert-success " id="ordre_success" ng-hide="true">
+                <strong>Success!</strong> Refresh is done
+            </div>
+        </div>
+
+
+    </div>
+    <!-- Tableau des ordre -->
+
+    <div class="col-lg-6">
+        <h2>Liste des Ordres</h2>
+
+        <div class="well well-lg">
+            <button class="btn btn-info btn-md" ng-click="load(0)">Charger<i class="fa fa-refresh"></i></button>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Num Ordre</th>
+                            <th>Date</th>
+                            <th>Nbr</th>
+                            <th>Prix action</th>
+                            <th>Societe</th>
+                            <th> Options CRUD </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat=" o in ordres">
+                            <td>{{o.num}}</td>
+                            <td>{{o.date | date:'yyyy-MM-dd HH:mm:ss '}}</td>
+                            <td>{{o.prix}}</td>
+                            <td>{{o.type}}</td>
+                            <td>{{o.prop.nom}}</td>
+                            <td><button type="button" class="btn btn-success btn-sm" ng-click="updateOrdre(o.num)"><i class="fa fa-edit"></i></button>                                <button type="button" class="btn btn-danger btn-sm" ng-click="deleteOrdre(o.num)"><i class="fa fa-times"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="container">
+                <ul class="nav nav-pills">
+                    <li ng-class="{active:$index==pagecourante}" class="clickable" ng-repeat="p in pages track by $index">
+                        <a ng-click="load($index)">{{$index}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.row -->
